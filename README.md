@@ -1,15 +1,21 @@
 # pywin
-**pywin** is a lightweight version of the [py.exe windows launcher available in python 3.3](http://docs.python.org/3/using/windows.html#launcher) that works for Python 2.5-3.3. It's written primarily with basic Windows batch scripts and a helper shell script for MSYS/MINGW support. It supports several useful features defined in [PEP 397](http://www.python.org/dev/peps/pep-0397/), such as command line conventions and hash bang #! python version headers in source files. While pywin lacks some of py.exe's features, it has the basics and a few extras of its own.
+**pywin** is a lightweight version of the [py.exe windows launcher available in python 3.3](http://docs.python.org/3/using/windows.html#launcher) that works for Python 2.5-3.3. It's written primarily with basic Windows batch scripts and a helper shell script for MSYS/MINGW32 support. I use bash and command line shell tools from [msysgit](http://msysgit.github.com/), based on MSYS/MINGW32, to do most of my python development on windows.
+
+**pywin** supports several useful features defined in [PEP 397](http://www.python.org/dev/peps/pep-0397/), such as command line conventions and hash bang #! python version headers in source files. While pywin lacks some of py.exe's features, it has the basics and a few extras of its own.
 
 
 ## Requirements
 * Windows >= XP for command prompt support
-* Windows >= Vista for MSYS/MINGW support
+* Windows >= Vista for MSYS/MINGW support (requires `mklink` for symbolic links)
 * At least one installation of python 2.5 up to 3.3 (though it's not useful without at least two)
 * easy_install, pip, or git
 
 
 ## Installation
+
+- Make sure the main python installation you want pywin to live under is in the PATH.
+- With multiple python installations, it's recommended to have only the main and Scripts directories from one installation in your PATH. For example, `C:\Python27;C:\Python27\Scripts`.
+
 #### easy_install
 ```sh
 easy_install pywin
@@ -56,8 +62,8 @@ C:\>pywin -2.7          # launch python 2.7
 
 C:\>pywin setdefault 3.3
 
-    Setting default python for active session to: 
-    C:\Python33 -- now at front of PATH
+    Setting default python for active session to: 3.3
+    C:\Python33;C:\Python33\Scripts -- now at front of PATH
 
 # Create a test file with a specified python version in the header
 C:\>echo #! /usr/bin/python2.7 > test.py
@@ -118,11 +124,26 @@ MSYS/MINGW32 shell, and you must have Windows >= Vista.
 ```sh
 pywin setdefault <version>
 ```
-Set the default python to <version>. Adds the right directory to
-the front of the path. E.g. `pywin setdefault 3.3`.
-This is only for the current cmd.exe session. If you want to change
-the permanent default python, you need to change your system or
-user path and make sure pywin is installed for that python version.
+Set the default python to `<major>.<minor>` version. Adds the right 
+python home directory and its associated Scripts directory to
+the front of PATH. Removes any other existing reference to a python
+Scripts directory in PATH.
+
+Example
+```sh
+# Existing PATH: C:\Windows\System32;C:\Windows;C:\Python27;C:\Python27\Scripts
+
+pywin setdefault 3.3
+
+# New PATH: C:\Python33;C:\Python33\Scripts;C:\Windows\System32;C:\Windows;C:\Python27;
+# C:\Python27 is preserved so that pywin can be found.
+
+```` 
+
+`pywin setdefault` is only active for the current cmd.exe 
+(or MSYS/MINGW32 shell) session. If you want to change the  
+default python permanently, you need to change your system or
+user PATH and make sure pywin is installed for that python version.
 
 When calling this from MSYS/MINGW32, enter a dot first so the changes 
 to $PATH propagate to your active shell. E.g. `. pywin setdefault 3.3`
@@ -133,10 +154,22 @@ to $PATH propagate to your active shell. E.g. `. pywin setdefault 3.3`
 pywin [-<version>] [<source file>]
 ```
 
-Launch either a specific version of python. E.g. `pywin -2.7`, 
+Launch either a specific `<major>.<minor>` version of python, 
 or a source file, or both. Note that specifying a version of python 
-on the command line will override any version set in the header of 
-the file.
+on the command line will override any version in the header of the 
+source file.
+
+Example
+```sh
+# launch python 2.7
+pywin -2.7
+
+# launch test.py with python 3.2
+pywin -3.2 test.py
+
+# launch test.py according to Version Search Order below
+pywin test.py
+```
 
 #### Version Search Order
 
