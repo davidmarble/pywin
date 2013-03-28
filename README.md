@@ -11,17 +11,17 @@
 
 ## Installation
 #### easy_install
-```console
+```bash
 easy_install pywin
 ```
 
 #### pip
-```console
+```bash
 pip install pywin
 ```
 
 ### from source
-```console
+```bash
 git clone git://github.com/davidmarble/pywin.git
 cd pywin
 python setup.py install
@@ -34,14 +34,14 @@ python setup.py install
 ### Auto-generate version-specific launchers
 **pywin** can create individual launch scripts to directly access core python installations (e.g. python2.7). These can be called directly with or without arguments from the Windows command prompt and MSYS/MINGW bash prompt. To use this feature, call
 
-```console
+```bash
 pywin genlaunchers
 ```
 
 Launchers are created for all machine-wide and user-specific python installations found in the Windows registry. Windows batch files will be added to the directory where **pywin** is located. MSYS/MINGW32 relies on Windows links created programmatically with `mklink`, which is why you must have Windows >= Vista installed to make use of this project.
 
 ### Launch a specific python version using pywin
-```console
+```bash
 pywin -2.7  # launch python 2.7
 pywin -3.2 test.py  # launch test.py with python 3.2
 ```
@@ -49,18 +49,16 @@ pywin -3.2 test.py  # launch test.py with python 3.2
 ### Automatically invoke the right python with a script header
 Add a directive to the first or second line of a source file to have the correct interpreter called. Currently this only supports python launchers created by the `pywin genlaunchers` command. To use this feature, you must associate the .py extension with pywin.bat using the included `pyassoc` utility. 
 
-```console
+```bash
 pyassoc
 ```
 
 
-## More Details
+## pywin
 
-### pywin usage
+**NOTE:** `pywin` commands work from both Windows command line and MSYS/MINGW32 shell.
 
-**NOTE:** These work from both Windows command line and MSYS/MINGW32 shell.
-
-```console
+```bash
 pywin genlaunchers
 ```
 Search for python installations and create batch files in the same
@@ -69,7 +67,7 @@ directory where pywin is installed.
 Note if you're using MSYS/MINGW32 this must be run again in the 
 MSYS/MINGW32 shell, and you must have Windows >= Vista.
 
-```console
+```bash
 pywin setdefault <version>
 ```
 Set the default python to <version>. Adds the right directory to
@@ -78,37 +76,40 @@ This is only for the current cmd.exe session. If you want to change
 the permanent default python, you need to change your system or
 user path and make sure pywin is installed for that python version.
 
-When calling this from MSYS/MINGW32, you must use a dot in front 
-so the path changes propagate to your current shell.
-E.g. `. pywin setdefault 3.3`
+When calling this from MSYS/MINGW32, enter a dot first so the changes 
+to $PATH propagate to your active shell. E.g. `. pywin setdefault 3.3`
 
-```console
+```bash
 pywin [<source file>]
 ```
 Launch the first version of python found among:
+
 1. Any version specified after a #! in the first 2 lines of the source.
    The interpreter will be invoked with any additional parameters.
+   
     examples:
+   
         #! python3.3
         #! /usr/bin/python2.7 -v
+
 2. If the environment variable VIRTUAL_ENV is set, use its python.exe.
 3. If the environment variable PYTHONHOME is set, use its python.exe.
 4. Default to the first python.exe found on the path.
 
-```console
+```bash
 pywin -<version> [<source file>]
 ```
 Launch a specific version of python. E.g. `pywin -2.7`.
 Note that specifying a version of python on the command line will 
 override any version set in the header of the file.
 
-### pyassoc usage
+## pyassoc
 
-```console
+```bash
 pyassoc [original] [all_users]`
 ```
 
-#### Default effect
+#### Default Effect
 The .py extension will be registered to run with `%pyhome%\pywin.bat`.
 By default this change is made in the registry to HKEY_CURRENT_USER, 
 overriding any system-wide setting.
@@ -116,15 +117,16 @@ overriding any system-wide setting.
 Note that registry settings have no effect on launch .py files 
 under MSYS/MINGW32.
 
-#### Parameters:
-- **original** - restore .py registry settings to launch with %pyhome%\python.exe
+#### Parameters
+- **original** - restore .py registry settings to launch with `%pyhome%\python.exe`
 - **all_users** - if administrator, apply changes to HKEY_LOCAL_MACHINE and
                   remove any HKEY_CURRENT_USER python keys.
                   Note that users can override this with their own 
                   HKEY_CURRENT_USER values.
 
 #### %pyhome%
-The variable %pyhome% used by `pyassoc` is set in this manner:
+The variable `%pyhome%` used by `pyassoc` is set in this manner:
+
 1. If the environment variable PYTHONHOME is set, use it.
 2. If the environment variable DEFAULTPYTHON is set, use it.
    This is set when you call `pywin setdefault <version>`,
