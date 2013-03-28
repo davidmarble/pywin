@@ -1,6 +1,6 @@
 ## License (BSD 3-clause)
 
-Copyright (c) 2013, David Marble
+Copyright (c) 2013, David Marble  
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
