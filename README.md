@@ -11,17 +11,17 @@
 
 ## Installation
 #### easy_install
-```powershell
+```console
 easy_install pywin
 ```
 
 #### pip
-```powershell
+```console
 pip install pywin
 ```
 
 ### from source
-```powershell
+```console
 git clone git://github.com/davidmarble/pywin.git
 cd pywin
 python setup.py install
@@ -29,7 +29,7 @@ python setup.py install
 
 
 ## Getting Started
-```powershell
+```console
 # Assuming pywin was installed with Python27
 
 C:\>pyassoc
@@ -78,14 +78,14 @@ C:\>pywin -3.2 test.py  # launch test.py with python 3.2
 ### Auto-generate version-specific launchers
 **pywin** can create individual launch scripts to directly access core python installations (e.g. python2.7). These can be called directly with or without arguments from the Windows command prompt and MSYS/MINGW bash prompt. To use this feature, call
 
-```powershell
+```console
 pywin genlaunchers
 ```
 
 Launchers are created for all machine-wide and user-specific python installations found in the Windows registry. Windows batch files will be added to the directory where **pywin** is located. MSYS/MINGW32 relies on Windows links created programmatically with `mklink`, which is why you must have Windows >= Vista installed to make use of this project.
 
 ### Launch a specific python version using pywin
-```powershell
+```console
 pywin -2.7  # launch python 2.7
 pywin -3.2 test.py  # launch test.py with python 3.2
 ```
@@ -93,7 +93,7 @@ pywin -3.2 test.py  # launch test.py with python 3.2
 ### Automatically invoke the right python with a script header
 Add a directive to the first or second line of a source file to have the correct interpreter called. Currently this only supports python launchers created by the `pywin genlaunchers` command. To use this feature, you must associate the .py extension with pywin.bat using the included `pyassoc` utility. 
 
-```powershell
+```console
 pyassoc
 ```
 
@@ -104,7 +104,7 @@ pyassoc
 
 ### genlaunchers
 
-```powershell
+```console
 pywin genlaunchers
 ```
 Search for python installations and create batch files in the same
@@ -115,7 +115,7 @@ MSYS/MINGW32 shell, and you must have Windows >= Vista.
 
 ### setdefault
 
-```powershell
+```console
 pywin setdefault <version>
 ```
 Set the default python to <version>. Adds the right directory to
@@ -129,7 +129,7 @@ to $PATH propagate to your active shell. E.g. `. pywin setdefault 3.3`
 
 ### launch with version and/or source
 
-```powershell
+```console
 pywin [-<version>] [<source file>]
 ```
 
@@ -159,8 +159,8 @@ the file.
 
 ## pyassoc
 
-```powershell
-pyassoc [original] [all_users]`
+```console
+pyassoc [original] [all_users]
 ```
 
 With no arguments, `pyassoc` will register the .py extension 
