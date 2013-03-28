@@ -1,0 +1,7 @@
+*.pyc
+*.gz
+*.egg
+*~
+build
+dist
+pywin.egg-info

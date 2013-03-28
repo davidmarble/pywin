@@ -1,0 +1,54 @@
+#!/bin/sh
+# Get path of this script
+# DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+if [ "$1" = "setdefault" ]; then
+    [ $SHLVL = 2 ] && printf "\nCall with '.', e.g.:\n    . pywin setdefault <version>\n" && exit
+    if [ -n "$VIRTUAL_ENV" ]; then
+        deactivate
+    fi
+    if [ "$2" = "" ]; then
+        echo "setdefault requires a python version, e.g. 2.7"
+        return 0
+    fi
+
+    if [ -n "$DEFAULTPYTHON" ]; then
+        OLDDEFAULT=$DEFAULTPYTHON
+    fi
+    # Search for entered python and put it in front of the path
+    # This code was used when scripts were used instead of symbolic links
+    PYSCRIPT="/usr/local/bin/python$2.sh"
+    if [ -f $PYSCRIPT ]; then
+        DEFAULTPYTHON=$( sed '2q;d' $PYSCRIPT | sed 's/ *$//g')
+        DEFAULTPYTHON=${DEFAULTPYTHON/\/python.exe \$\*/}
+        echo
+        echo "    Setting default python to: $DEFAULTPYTHON"
+    else
+        echo
+        echo "    Could not find /usr/local/bin/python$2.sh"
+        echo "    Perhaps you need to run `pywin genpythons`?"
+        return 0
+    fi
+
+    if [ -n "$OLDDEFAULT" ]; then
+        PATH=${PATH/$OLDDEFAULT/$DEFAULTPYTHON}
+    else
+        PATH=$DEFAULTPYTHON:$PATH
+    fi
+    
+    # Not used currently -- this would make the default python permanent,
+    # but the PATH change needed cannot be saved easily.
+    # PATHPYTHON=$( which python.exe )
+    # rm -f /bin/python
+    # rm -f /local/bin/python
+    # ln -s "$PATHPYTHON" /bin/python
+    # ln -s "$PATHPYTHON" /local/bin/python
+
+else
+    # Fix to launch 64-bit cmd.exe from 32-bit MSYS/MINGW32
+    if [ -d $SYSTEMROOT/Sysnative ]; then
+        $SYSTEMROOT/Sysnative/cmd.exe //c pywin.bat $*
+    else
+        cmd.exe //c pywin.bat $*
+    fi
+fi
