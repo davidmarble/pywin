@@ -1,9 +1,14 @@
 #!/bin/sh
-# Get path of this script
-# DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 if [ "$1" = "setdefault" ]; then
     [ $SHLVL = 2 ] && printf "\nCall with '.', e.g.:\n    . pywin setdefault <version>\n" && exit
+
+    # Get path of this script
+    PYWINDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+    
+    # Get path of active python.exe
+    PATHPYTHON=$( which python.exe )
+
     if [ -n "$VIRTUAL_ENV" ]; then
         deactivate
     fi
@@ -23,27 +28,39 @@ if [ "$1" = "setdefault" ]; then
         DEFAULTPYTHON=${DEFAULTPYTHON/\/python.exe \$\*/}
         echo
         echo "    Setting default python for active session to:"
-        echo "    $DEFAULTPYTHON -- now at front of PATH"
+        echo "    $DEFAULTPYTHON:$DEFAULTPYTHON/Scripts -- now at front of PATH"
     else
         echo
         echo "    Could not find /usr/local/bin/python$2.sh"
         echo "    Perhaps you need to run `pywin genpythons`?"
         return 0
     fi
-
-    if [ -n "$OLDDEFAULT" ]; then
-        PATH=${PATH/$OLDDEFAULT/$DEFAULTPYTHON}
-    else
-        PATH=$DEFAULTPYTHON:$PATH
-    fi
     
+    # Remove any trailing slashes from PATH, and remove all
+    # python home and Scripts directories from PATH.
+    # Add $DEFAULTPYTHON:$DEFAULTPYTHON/Scripts: to front of PATH,
+    # and :$PYWINDIR to end of PATH.
+    PATH=${PATH//\/:/:}:
+    PATH=${PATH/$PATHPYTHON\/Scripts:/}
+    PATH=${PATH/$PATHPYTHON:/}
+    PATH=${PATH/$PYWINDIR\/Scripts:/}
+    PATH=${PATH/$PYWINDIR:/}
+    if [ -n "$OLDDEFAULT" ]; then
+        PATH=${PATH/$OLDDEFAULT\/Scripts:/}
+        PATH=${PATH/$OLDDEFAULT:/}
+    fi
+    PATH=$DEFAULTPYTHON:$DEFAULTPYTHON/Scripts:$PATH$PYWINDIR
+
     # Not used currently -- this would make the default python permanent,
     # but the PATH change needed cannot be saved easily.
-    # PATHPYTHON=$( which python.exe )
     # rm -f /bin/python
     # rm -f /local/bin/python
     # ln -s "$PATHPYTHON" /bin/python
     # ln -s "$PATHPYTHON" /local/bin/python
+    unset PYWINDIR
+    unset PATHPYTHON
+    unset OLDDEFAULT
+    unset PYSCRIPT
 
 else
     # Fix to launch 64-bit cmd.exe from 32-bit MSYS/MINGW32

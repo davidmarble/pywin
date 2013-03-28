@@ -121,8 +121,8 @@ if "%arg%"=="setdefault" (
                 set "DEFAULTPYTHON=!DEFAULTPYTHON:~3,-15!"
             )
             echo.
-            echo.    Setting default python for active session to:
-            echo.    !DEFAULTPYTHON! -- now at front of PATH
+            echo.    Setting default python for active session to: !arg!
+            echo.    !DEFAULTPYTHON!;!DEFAULTPYTHON!\Scripts -- now at front of PATH
         )
     )
     popd
@@ -221,11 +221,19 @@ ENDLOCAL & %PY% %args%
 goto :EOF
 
 :NEWDEFAULT
+:: Remove any trailing slashes from PATH, and remove all
+:: python home and Scripts directories from PATH.
+:: Add %DEFAULTPYTHON%;%DEFAULTPYTHON%\Scripts; to front of PATH,
+:: and %pywindir%; to end of PATH.
+set "TEMPPATH=!PATH:\;=;!"
+set "TEMPPATH=!TEMPPATH:%PATHPYTHON%\Scripts;=!"
+set "TEMPPATH=!TEMPPATH:%PATHPYTHON%;=!"
+set "TEMPPATH=!TEMPPATH:%pywindir%\Scripts;=!"
+set "TEMPPATH=!TEMPPATH:%pywindir%;=!"
 if "%OLDDEFAULT%"=="" (
-    set "TEMPPATH=%DEFAULTPYTHON%;%PATH%"
-) else (
-    set "TEMPPATH=!PATH:%OLDDEFAULT%;=%DEFAULTPYTHON%;!"
+    set "TEMPPATH=!TEMPPATH:%OLDDEFAULT%;%OLDDEFAULT%\Scripts;=!"
 )
+set "TEMPPATH=%DEFAULTPYTHON%;%DEFAULTPYTHON%\Scripts;!TEMPPATH!%pywindir%;"
 ENDLOCAL & set "DEFAULTPYTHON=%DEFAULTPYTHON%" & set "PATH=%TEMPPATH%"
 goto :EOF
 
@@ -250,7 +258,6 @@ for /L %%a in (0,1,1023) do (
 )
 ENDLOCAL & IF "%~3" NEQ "" SET "%~3=%pos%"
 goto :EOF
-
 
 :genLaunchers -- looks for python installations and creates Windows batch files and MSYS/MINGW32 symbolic links to launch each
 ::    %~1: in  - registry key where python installations can be found
