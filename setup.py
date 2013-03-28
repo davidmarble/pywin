@@ -17,7 +17,9 @@ from setuptools import setup
 
 long_description = ''
 try:
-    long_description = open('README.md', 'rt').read()
+    # with open('README.md', 'rt') as f:
+        # long_description = f.read()
+    long_description = "See `the project page at github  <https://github.com/davidmarble/pywin>`_"
 except IOError:
     pass
 
