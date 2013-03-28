@@ -6,7 +6,7 @@ use_setuptools()
 PROJECT = 'pywin'
 AUTHOR = 'David Marble'
 EMAIL = 'davidmarble@gmail.com'
-DESCRIPTION = ('Lightweight python Windows launcher, like py.exe in python 3.3 (PEP 397)')
+DESCRIPTION = ('Lightweight python 2.5-3.3 launcher and switcher for Windows command line and MSYS/MINGW32. Partly PEP 397 compliant.')
 VERSION = '0.2'
 PROJECT_URL = 'https://github.com/davidmarble/%s/' % (PROJECT)
 
