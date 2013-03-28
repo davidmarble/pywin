@@ -1,12 +1,12 @@
 # pywin
-**pywin** is a lightweight version of the [py.exe windows launcher available in python 3.3](http://docs.python.org/3/using/windows.html#launcher). It supports several [PEP 397](http://www.python.org/dev/peps/pep-0397/) command line conventions and hash bang #! python version headers in source files. While pywin lacks some of py.exe's features, it has a few extras of its own. 
+**pywin** is a lightweight version of the [py.exe windows launcher available in python 3.3](http://docs.python.org/3/using/windows.html#launcher) that works for Python 2.5-3.3. It's written primarily with basic Windows batch scripts and a helper shell script for MSYS/MINGW support. It supports several useful features defined in [PEP 397](http://www.python.org/dev/peps/pep-0397/), such as command line conventions and hash bang #! python version headers in source files. While pywin lacks some of py.exe's features, it has the basics and a few extras of its own.
 
 
 ## Requirements
 * Windows >= XP for command prompt support
 * Windows >= Vista for MSYS/MINGW support
-* At least one version of python installed (though it's not useful without more)
-* easy_install, pip, or a desire to install from source
+* At least one installation of python 2.5 up to 3.3 (though it's not useful without at least two)
+* easy_install, pip, or git
 
 
 ## Installation
