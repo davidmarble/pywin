@@ -22,7 +22,8 @@ if [ "$1" = "setdefault" ]; then
         DEFAULTPYTHON=$( sed '2q;d' $PYSCRIPT | sed 's/ *$//g')
         DEFAULTPYTHON=${DEFAULTPYTHON/\/python.exe \$\*/}
         echo
-        echo "    Setting default python to: $DEFAULTPYTHON"
+        echo "    Setting default python for active session to:"
+        echo "    $DEFAULTPYTHON -- now at front of PATH"
     else
         echo
         echo "    Could not find /usr/local/bin/python$2.sh"

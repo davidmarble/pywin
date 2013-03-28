@@ -28,7 +28,51 @@ python setup.py install
 ```
 
 
-## Quick Tour
+## Getting Started
+```bash
+# Assuming pywin was installed with Python27
+
+C:\>pyassoc
+
+    HKEY_CURRENT_USER\Software\Classes python keys created successfully.
+
+    .py files will launch with "C:\Python27\pywin.bat"
+
+C:\>pywin genlaunchers
+
+    Generating launchers...
+
+    C:\Python27\python2.7.bat -> C:\Python27\python.exe
+    C:\Python27\python2.6.bat -> C:\Python26\python.exe
+    C:\Python27\python2.5.bat -> C:\Python25\python.exe
+    C:\Python27\python3.0.bat -> C:\Python30\python.exe
+    C:\Python27\python3.1.bat -> C:\Python31\python.exe
+    C:\Python27\python3.2.bat -> C:\Python32\python.exe
+    C:\Python27\python3.3.bat -> C:\Python33\python.exe
+
+C:\>pywin               # launch first python found in PATH
+
+C:\>pywin -2.7          # launch python 2.7
+
+C:\>pywin setdefault 3.3
+
+    Setting default python for active session to: 
+    C:\Python33 -- now at front of PATH
+
+# Create a test file with a specified python version in the header
+C:\>echo #! /usr/bin/python2.7 > test.py
+C:\>echo import sys;print("\n  %s"%sys.exec_prefix) >> test.py
+C:\>test.py
+  
+  C:\Python27
+
+C:\>pywin -3.2 test.py  # launch test.py with python 3.2
+
+  C:\Python32
+
+```
+
+## Overview
 **pywin** and its associated scripts are installed in the main directory of the active python version (e.g. C:\Python27). There's no need to install it under more than one version of python (if you do, you'll have to run `pywin genlaunchers` for each version you install it under). Make sure that this main python directory is always on the path. Alternatively you can move the included scripts to another directory in your path.
 
 ### Auto-generate version-specific launchers

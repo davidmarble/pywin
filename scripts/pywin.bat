@@ -121,7 +121,8 @@ if "%arg%"=="setdefault" (
                 set "DEFAULTPYTHON=!DEFAULTPYTHON:~3,-15!"
             )
             echo.
-            echo.    Setting default python to: !DEFAULTPYTHON!
+            echo.    Setting default python for active session to:
+            echo.    !DEFAULTPYTHON! -- now at front of PATH
         )
     )
     popd
