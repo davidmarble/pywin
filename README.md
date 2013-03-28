@@ -58,6 +58,8 @@ pyassoc
 
 **NOTE:** `pywin` commands work from both Windows command line and MSYS/MINGW32 shell.
 
+### genlaunchers
+
 ```bash
 pywin genlaunchers
 ```
@@ -66,6 +68,8 @@ directory where pywin is installed.
 
 Note if you're using MSYS/MINGW32 this must be run again in the 
 MSYS/MINGW32 shell, and you must have Windows >= Vista.
+
+### setdefault
 
 ```bash
 pywin setdefault <version>
@@ -79,10 +83,20 @@ user path and make sure pywin is installed for that python version.
 When calling this from MSYS/MINGW32, enter a dot first so the changes 
 to $PATH propagate to your active shell. E.g. `. pywin setdefault 3.3`
 
+### launch with version and/or source
+
 ```bash
-pywin [<source file>]
+pywin [-<version>] [<source file>]
 ```
-Launch the first version of python found among:
+
+Launch either a specific version of python. E.g. `pywin -2.7`, 
+or a source file, or both. Note that specifying a version of python 
+on the command line will override any version set in the header of 
+the file.
+
+#### Version Search Order
+
+**pywin** will launch the first version of python found among:
 
 1. Any version specified after a #! in the first 2 lines of the source.
    The interpreter will be invoked with any additional parameters.
@@ -92,16 +106,12 @@ Launch the first version of python found among:
         #! python3.3
         #! /usr/bin/python2.7 -v
 
-2. If the environment variable VIRTUAL_ENV is set, use its python.exe.
-3. If the environment variable PYTHONHOME is set, use its python.exe.
-4. Default to the first python.exe found on the path.
-
-```bash
-pywin -<version> [<source file>]
-```
-Launch a specific version of python. E.g. `pywin -2.7`.
-Note that specifying a version of python on the command line will 
-override any version set in the header of the file.
+2. If the environment variable `VIRTUAL_ENV` is set, use that 
+   virtualenv's `python.exe`.
+3. If the environment variable `PYTHONHOME` is set, use its 
+   `python.exe`.
+4. If none of the above, fall back to the first `python.exe` 
+   found on the path.
 
 ## pyassoc
 
@@ -109,26 +119,26 @@ override any version set in the header of the file.
 pyassoc [original] [all_users]`
 ```
 
-#### Default Effect
-The .py extension will be registered to run with `%pyhome%\pywin.bat`.
-By default this change is made in the registry to HKEY_CURRENT_USER, 
-overriding any system-wide setting.
+With no arguments, `pyassoc` will register the .py extension 
+to run with `%pyhome%\pywin.bat`. This change is made in the 
+registry to `HKEY_CURRENT_USER`, so that when .py files are invoked,
+any machine-wide setting is overridden.
 
 Note that registry settings have no effect on launch .py files 
 under MSYS/MINGW32.
 
 #### Parameters
 - **original** - restore .py registry settings to launch with `%pyhome%\python.exe`
-- **all_users** - if administrator, apply changes to HKEY_LOCAL_MACHINE and
-                  remove any HKEY_CURRENT_USER python keys.
+- **all_users** - if administrator, apply changes to `HKEY_LOCAL_MACHINE` and
+                  remove any `HKEY_CURRENT_USER` python keys.
                   Note that users can override this with their own 
-                  HKEY_CURRENT_USER values.
+                  `HKEY_CURRENT_USER` values.
 
 #### %pyhome%
 The variable `%pyhome%` used by `pyassoc` is set in this manner:
 
-1. If the environment variable PYTHONHOME is set, use it.
-2. If the environment variable DEFAULTPYTHON is set, use it.
+1. If the environment variable `PYTHONHOME` is set, use it.
+2. If the environment variable `DEFAULTPYTHON` is set, use it.
    This is set when you call `pywin setdefault <version>`,
    but only lasts for the current session.
 3. The path the `pyassoc.bat` script is in.
