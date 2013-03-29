@@ -7,7 +7,7 @@ PROJECT = 'pywin'
 AUTHOR = 'David Marble'
 EMAIL = 'davidmarble@gmail.com'
 DESCRIPTION = ('Lightweight python 2.5-3.3 launcher and switcher for Windows command line and MSYS/MINGW32. Partly PEP 397 compliant.')
-VERSION = '0.2'
+VERSION = '0.3'
 PROJECT_URL = 'https://github.com/davidmarble/%s/' % (PROJECT)
 
 import os

@@ -1,5 +1,5 @@
 # pywin
-**pywin** is a lightweight python 2.5-3.3 launcher and switcher for Windows command line and MSYS/MINGW32. It's similar to the [py.exe launcher/switcher available in python 3.3](http://docs.python.org/3/using/windows.html#launcher), but written with basic Windows batch scripts and a helper shell script for MSYS/MINGW32 support. I use bash and command line shell tools from [msysgit](http://msysgit.github.com/), based on MSYS/MINGW32, to do most of my python development on windows.
+**pywin** is a lightweight python 2.5-3.3 launcher and switcher for Windows command line and MSYS/MINGW32. It's similar to the [py.exe launcher/switcher available in python 3.3](http://docs.python.org/3/using/windows.html#launcher), but written with basic Windows batch scripts and a shell script for MSYS/MINGW32 support. I use bash and command line shell tools from [msysgit](http://msysgit.github.com/), based on MSYS/MINGW32, to do most of my python development on Windows.
 
 **pywin** supports several useful features defined in [PEP 397](http://www.python.org/dev/peps/pep-0397/), such as command line conventions and hash bang #! python version headers in source files. While pywin lacks some of py.exe's features, it has the basics and a few extras of its own.
 
