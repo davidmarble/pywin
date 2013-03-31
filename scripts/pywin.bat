@@ -156,8 +156,8 @@ if not "%arg%"=="" (
 :: Argument may be enclosed in quotes
 if not "%arg%"=="" (
     set "argsuffix=%arg:"=%"
-    set "argsuffix=%argsuffix:~-3%"
-    if "%argsuffix%"==".py" (
+    set "argsuffix=!argsuffix:~-3!"
+    if "!argsuffix!"==".py" (
         for /f "usebackq tokens=*" %%f in (`findstr /n . %arg% ^| findstr /b 1:#!`) do (
             set "pyverline=%%f"
         )
