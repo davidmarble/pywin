@@ -36,14 +36,14 @@ Installation
    example, ``C:\Python27;C:\Python27\Scripts``.
 
 easy\_install
-^^^^^^^^^^^^^
+~~~~~~~~~~~~~
 
 .. code:: sh
 
     easy_install pywin
 
 pip
-^^^
+~~~
 
 .. code:: sh
 
@@ -183,21 +183,20 @@ python home directory and its associated Scripts directory to the front
 of PATH. Removes any other existing reference to a python Scripts
 directory in PATH.
 
-Example \`\`\`sh # Existing PATH: C:32;C:;C:27;C:27
+Example
 
-pywin setdefault 3.3
+.. code:: sh
 
-New PATH: C:33;C:33;C:32;C:;C:27;
-=================================
+    # Existing PATH: C:\Windows\System32;C:\Windows;C:\Python27;C:\Python27\Scripts
 
-C:27 is preserved so that pywin can be found.
-=============================================
+    pywin setdefault 3.3
 
-\`\`\`\`
+    # New PATH: C:\Python33;C:\Python33\Scripts;C:\Windows\System32;C:\Windows;C:\Python27;
+    # C:\Python27 is preserved so that pywin can be found.
 
-| ``pywin setdefault`` is only active for the current cmd.exe (or
+``pywin setdefault`` is only active for the current cmd.exe (or
 MSYS/MINGW32 shell) session. If you want to change the
-| default python permanently, you need to change your system or user
+default python permanently, you need to change your system or user
 PATH and make sure pywin is installed for that python version.
 
 When calling this from MSYS/MINGW32, enter a dot first so the changes to
@@ -214,20 +213,21 @@ Launch either a specific ``<major>.<minor>`` version of python, or a
 source file, or both. Note that specifying a version of python on the
 command line will override any version in the header of the source file.
 
-Example \`\`\`sh # launch python 2.7 pywin -2.7
+Example
 
-launch test.py with python 3.2
-==============================
+.. code:: sh
 
-pywin -3.2 test.py
+    # launch python 2.7
+    pywin -2.7
 
-launch test.py according to Version Search Order below
-======================================================
+    # launch test.py with python 3.2
+    pywin -3.2 test.py
 
-pywin test.py \`\`\`
+    # launch test.py according to Version Search Order below
+    pywin test.py
 
 Version Search Order
-^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~
 
 **pywin** will launch the first version of python found among:
 
@@ -264,7 +264,7 @@ Note that registry settings have no effect on launch .py files under
 MSYS/MINGW32.
 
 Parameters
-^^^^^^^^^^
+~~~~~~~~~~
 
 -  **original** - restore .py registry settings to launch with
    ``%pyhome%\python.exe``
@@ -274,7 +274,7 @@ Parameters
    ``HKEY_CURRENT_USER`` values.
 
 %pyhome%
-^^^^^^^^
+~~~~~~~~
 
 The variable ``%pyhome%`` used by ``pyassoc`` is set in this manner:
 
