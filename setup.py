@@ -7,7 +7,7 @@ PROJECT = 'pywin'
 AUTHOR = 'David Marble'
 EMAIL = 'davidmarble@gmail.com'
 DESCRIPTION = ('Lightweight python 2.5-3.3 launcher and switcher for Windows command line and MSYS/MINGW32. Partly PEP 397 compliant.')
-VERSION = '0.3'
+VERSION = '0.3.1'
 PROJECT_URL = 'https://github.com/davidmarble/%s/' % (PROJECT)
 
 import os
@@ -17,9 +17,8 @@ from setuptools import setup
 
 long_description = ''
 try:
-    # with open('README.md', 'rt') as f:
-        # long_description = f.read()
-    long_description = "See `the project page at github  <https://github.com/davidmarble/pywin>`_"
+    with open('README.rst', 'rt') as f:
+        long_description = f.read()
 except IOError:
     pass
 
@@ -46,19 +45,21 @@ if _being_installed():
     pass
 
 setup(
-    name = PROJECT,
-    version = VERSION,
+    name=PROJECT,
+    version=VERSION,
 
-    description = DESCRIPTION,
-    long_description = long_description,
+    description=DESCRIPTION,
+    long_description=long_description,
 
-    author = AUTHOR,
-    author_email = EMAIL,
-    url = PROJECT_URL,
+    author=AUTHOR,
+    author_email=EMAIL,
+    url=PROJECT_URL,
+    license="BSD 3-clause",
+    keywords="python windows version switcher launcher",
 
-    platforms = ['WIN32', 'WIN64',],
+    platforms=['WIN32', 'WIN64',],
     
-    classifiers = [
+    classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Win32 (MS Windows)',
         'License :: OSI Approved :: BSD License',
@@ -76,7 +77,7 @@ setup(
         'Intended Audience :: Developers',
         'Environment :: Console', ],
 
-    scripts = [scripts_loc + script for script in scripts],
+    scripts=[scripts_loc + script for script in scripts],
 
     zip_safe=False,
     )
