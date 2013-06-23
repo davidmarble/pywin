@@ -360,7 +360,6 @@ for /f "usebackq tokens=*" %%a in (`reg.exe query %rkey% /s /f InstallPath`) do 
                     )
                     if "!pyver!"=="3.3" (
                         if not exist "%msys%\local\bin\python33.dll" (
-                            echo. "!pyhome!python33.dll"
                             mklink "%msys%\local\bin\python33.dll" "!pyhome!python33.dll" >NUL 2>NUL
                         )
                         if not exist "%msys%\local\bin\msvcr100.dll" (
