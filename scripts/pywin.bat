@@ -72,15 +72,19 @@ if "%arg%"=="genlaunchers" (
         del "%msys%\local\bin\python" >NUL 2>NUL
         mklink "%msys%\bin\python" "%PATHPYTHON%\python.exe" >NUL 2>NUL
         @if errorlevel 0 (
-            echo.    "%msys%\bin\python -> %PATHPYTHON%\python.exe"
+            set/p "=tab    %msys%\bin\python -> %PATHPYTHON%\python.exe" <nul
+            echo.
         ) else (
-            echo.  "ERROR creating link: %msys%\local\bin\python -> %PATHPYTHON%\python.exe"
+            set/p "=tab    ERROR creating link: %msys%\local\bin\python -> %PATHPYTHON%\python.exe" <nul
+            echo.
         )
         mklink "%msys%\local\bin\python" "%PATHPYTHON%\python.exe" >NUL 2>NUL
         @if errorlevel 0 (
-            echo.    "%msys%\local\bin\python -> %PATHPYTHON%\python.exe"
+            set/p "=tab    %msys%\local\bin\python -> %PATHPYTHON%\python.exe" <nul
+            echo.
         ) else (
-            echo.  "ERROR creating link: %msys%\local\bin\python -> %PATHPYTHON%\python.exe"
+            set/p "=tab    ERROR creating link: %msys%\local\bin\python -> %PATHPYTHON%\python.exe" <nul
+            echo.
         )
         REM Old way:
         REM echo #^^!/bin/sh > %MSYS_HOME%/bin/python
@@ -301,9 +305,11 @@ for /f "usebackq tokens=*" %%a in (`reg.exe query %rkey% /s /f InstallPath`) do 
                     del "%msys%\local\bin\python!pyver!" >NUL 2>NUL
                     mklink "%msys%\local\bin\python!pyver!" "!pyhome!python.exe" >NUL 2>NUL
                     @if errorlevel 0 (
-                        echo.    "%msys%\local\bin\python!pyver! -> !pyhome!python.exe"
+                        set/p "=tab    %msys%\local\bin\python!pyver! -> !pyhome!python.exe" <nul
+                        echo.
                     ) else (
-                        echo.  "ERROR creating link: %msys%\local\bin\python!pyver! -> !pyhome!python.exe"
+                        set/p "=tab    ERROR creating link: %msys%\local\bin\python!pyver! -> !pyhome!python.exe" <nul
+                        echo.
                     )
                     
                     REM Create shell scripts primarily for setdefault use.
@@ -354,6 +360,7 @@ for /f "usebackq tokens=*" %%a in (`reg.exe query %rkey% /s /f InstallPath`) do 
                     )
                     if "!pyver!"=="3.3" (
                         if not exist "%msys%\local\bin\python33.dll" (
+                            echo. "!pyhome!python33.dll"
                             mklink "%msys%\local\bin\python33.dll" "!pyhome!python33.dll" >NUL 2>NUL
                         )
                         if not exist "%msys%\local\bin\msvcr100.dll" (
