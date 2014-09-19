@@ -50,11 +50,11 @@ if "%MSYSTEM%"=="MINGW32" (
         echo.    MSYS_HOME must be defined, e.g. MSYS_HOME=/c/msysgit
         goto :EOF
     )
-    set msys=%MSYS_HOME:/c/=C:\%
-    set msys=!msys:/d/=D:\!
-    set msys=!msys:/e/=E:\!
-    set msys=!msys:/f/=F:\!
-    set msys=!msys:/=\!
+    set "msys=%MSYS_HOME:/c/=C:\%"
+    set "msys=!msys:/d/=D:\!"
+    set "msys=!msys:/e/=E:\!"
+    set "msys=!msys:/f/=F:\!"
+    set "msys=!msys:/=\!"
 )
 
 :: Find python installations in the registry and create shorcut launchers.
@@ -72,15 +72,19 @@ if "%arg%"=="genlaunchers" (
         del "%msys%\local\bin\python" >NUL 2>NUL
         mklink "%msys%\bin\python" "%PATHPYTHON%\python.exe" >NUL 2>NUL
         @if errorlevel 0 (
-            echo.    %msys%\bin\python -^> %PATHPYTHON%\python.exe
+            set/p "=tab    %msys%\bin\python -> %PATHPYTHON%\python.exe" <nul
+            echo.
         ) else (
-            echo.  ERROR creating link: %msys%\local\bin\python -^> %PATHPYTHON%\python.exe
+            set/p "=tab    ERROR creating link: %msys%\local\bin\python -> %PATHPYTHON%\python.exe" <nul
+            echo.
         )
         mklink "%msys%\local\bin\python" "%PATHPYTHON%\python.exe" >NUL 2>NUL
         @if errorlevel 0 (
-            echo.    %msys%\local\bin\python -^> %PATHPYTHON%\python.exe
+            set/p "=tab    %msys%\local\bin\python -> %PATHPYTHON%\python.exe" <nul
+            echo.
         ) else (
-            echo.  ERROR creating link: %msys%\local\bin\python -^> %PATHPYTHON%\python.exe
+            set/p "=tab    ERROR creating link: %msys%\local\bin\python -> %PATHPYTHON%\python.exe" <nul
+            echo.
         )
         REM Old way:
         REM echo #^^!/bin/sh > %MSYS_HOME%/bin/python
@@ -301,9 +305,11 @@ for /f "usebackq tokens=*" %%a in (`reg.exe query %rkey% /s /f InstallPath`) do 
                     del "%msys%\local\bin\python!pyver!" >NUL 2>NUL
                     mklink "%msys%\local\bin\python!pyver!" "!pyhome!python.exe" >NUL 2>NUL
                     @if errorlevel 0 (
-                        echo.    %msys%\local\bin\python!pyver! -^> !pyhome!python.exe
+                        set/p "=tab    %msys%\local\bin\python!pyver! -> !pyhome!python.exe" <nul
+                        echo.
                     ) else (
-                        echo.  ERROR creating link: %msys%\local\bin\python!pyver! -^> !pyhome!python.exe
+                        set/p "=tab    ERROR creating link: %msys%\local\bin\python!pyver! -> !pyhome!python.exe" <nul
+                        echo.
                     )
                     
                     REM Create shell scripts primarily for setdefault use.
@@ -315,48 +321,48 @@ for /f "usebackq tokens=*" %%a in (`reg.exe query %rkey% /s /f InstallPath`) do 
                     set pyhome=!pyhome:E:=e!
                     set pyhome=!pyhome:F:=f!
                     set pyhome=/!pyhome:\=/!
-                    echo #^^!/bin/sh > %msys%\local\bin\python!pyver!.sh
-                    echo !pyhome!python.exe $* >> %msys%\local\bin\python!pyver!.sh
+                    echo #^^!/bin/sh > "%msys%\local\bin\python!pyver!.sh"
+                    echo !pyhome!python.exe $* >> "%msys%\local\bin\python!pyver!.sh"
                     REM echo.    %msys%\local\bin\python!pyver! -^> !pyhome!python.exe
 
                     REM Add additional needed linked files
                     if "!pyver!"=="2.5" (
-                        if not exist %msys%\local\bin\python25.dll (
+                        if not exist "%msys%\local\bin\python25.dll" (
                             mklink "%msys%\local\bin\python25.dll" "!pyhome!python25.dll" >NUL 2>NUL
                         )
-                        if not exist %msys%\local\bin\msvcr71.dll (
+                        if not exist "%msys%\local\bin\msvcr71.dll" (
                             mklink "%msys%\local\bin\msvcr71.dll" "!pyhome!msvcr71.dll" >NUL 2>NUL
                         )
                     )
                     if "!pyver!"=="3.0" (
-                        if not exist %msys%\local\bin\python30.dll (
+                        if not exist "%msys%\local\bin\python30.dll" (
                             mklink "%msys%\local\bin\python30.dll" "!pyhome!python30.dll" >NUL 2>NUL
                         )
-                        if not exist %msys%\local\bin\msvcr90.dll (
+                        if not exist "%msys%\local\bin\msvcr90.dll" (
                             mklink "%msys%\local\bin\msvcr90.dll" "!pyhome!msvcr90.dll" >NUL 2>NUL
                         )
                     )
                     if "!pyver!"=="3.1" (
-                        if not exist %msys%\local\bin\python31.dll (
+                        if not exist "%msys%\local\bin\python31.dll" (
                             mklink "%msys%\local\bin\python31.dll" "!pyhome!python31.dll" >NUL 2>NUL
                         )
-                        if not exist %msys%\local\bin\msvcr90.dll (
+                        if not exist "%msys%\local\bin\msvcr90.dll" (
                             mklink "%msys%\local\bin\msvcr90.dll" "!pyhome!msvcr90.dll" >NUL 2>NUL
                         )
                     )
                     if "!pyver!"=="3.2" (
-                        if not exist %msys%\local\bin\python32.dll (
+                        if not exist "%msys%\local\bin\python32.dll" (
                             mklink "%msys%\local\bin\python32.dll" "!pyhome!python32.dll" >NUL 2>NUL
                         )
-                        if not exist %msys%\local\bin\msvcr90.dll (
+                        if not exist "%msys%\local\bin\msvcr90.dll" (
                             mklink "%msys%\local\bin\msvcr90.dll" "!pyhome!msvcr90.dll" >NUL 2>NUL
                         )
                     )
                     if "!pyver!"=="3.3" (
-                        if not exist %msys%\local\bin\python33.dll (
+                        if not exist "%msys%\local\bin\python33.dll" (
                             mklink "%msys%\local\bin\python33.dll" "!pyhome!python33.dll" >NUL 2>NUL
                         )
-                        if not exist %msys%\local\bin\msvcr100.dll (
+                        if not exist "%msys%\local\bin\msvcr100.dll" (
                             mklink "%msys%\local\bin\msvcr100.dll" "!pyhome!msvcr100.dll" >NUL 2>NUL
                         )
                     )
